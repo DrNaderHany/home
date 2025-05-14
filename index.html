@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>منصة نادر هاني  التعليمية</title>
+  <title>منصة نادر هاني التعليمية</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <style>
+  <style>
     body {
       font-family: 'Tahoma', sans-serif;
       background-color: #f9f9f9;
@@ -50,11 +50,11 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .testimonial img {
-  width: 100%; /* لتغطية العرض بالكامل */
-  height: 250px; /* تحديد ارتفاع مناسب */
-  object-fit: cover; /* لملء المساحة مع الحفاظ على النسبة */
-  border-radius: 8px;
-}
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
     footer {
       background: #eee;
       text-align: center;
@@ -77,11 +77,71 @@
       align-items: center;
       background-color: transparent;
       color: #25d366;
-      font-size: 36px; /* زيادة حجم الأيقونة */
+      font-size: 36px;
       text-decoration: none;
     }
     .floating-buttons a.telegram {
       color: #0088cc;
+    }
+    /* مودال */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      max-width: 80%;
+      max-height: 80%;
+    }
+    .modal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 40px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      border-radius: 50%;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .close:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    /* أسهم التنقل */
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .prev {
+      left: 10px;
+    }
+    .next {
+      right: 10px;
+    }
+    .prev:hover, .next:hover {
+      background: rgba(0, 0, 0, 0.7);
     }
   </style>
 </head>
@@ -107,11 +167,10 @@
       <h2>آراء الطلاب</h2>
       <div class="testimonials">
         <div class="testimonial">
-          <img src="images/1.jpg" alt="رأي طالب">
-       
+          <img src="images/1.jpg" alt="رأي طالب" class="image-item">
         </div>
         <div class="testimonial">
-          <img src="images/student2.jpg" alt="رأي طالب">
+          <img src="images/student2.jpg" alt="رأي طالب" class="image-item">
           <p>أفضل منصة تعليمية جربتها.</p>
         </div>
         <!-- أضف المزيد من الصور هنا -->
@@ -120,7 +179,7 @@
   </div>
 
   <footer>
-    جميع الحقوق محفوظة ©   نادر هاني
+    جميع الحقوق محفوظة © نادر هاني
   </footer>
 
   <!-- أزرار عائمة -->
@@ -132,6 +191,63 @@
       <i class="fab fa-telegram-plane"></i>
     </a>
   </div>
+
+  <!-- نافذة عرض الصورة الكبيرة -->
+  <div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="صورة كبيرة">
+    </div>
+    <span class="prev">&#10094;</span>
+    <span class="next">&#10095;</span>
+  </div>
+
+  <script>
+    // تفعيل فتح النافذة عند النقر على الصور
+    const images = document.querySelectorAll('.image-item');
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.close');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let currentIndex = 0;
+
+    // تخزين روابط الصور في مصفوفة
+    const imageLinks = Array.from(images).map(image => image.src);
+
+    // فتح المودال مع عرض الصورة المختارة
+    images.forEach((image, index) => {
+      image.addEventListener('click', function() {
+        modal.style.display = 'flex';
+        modalImage.src = image.src;
+        currentIndex = index; // تعيين الفهرس الحالي
+      });
+    });
+
+    // إغلاق المودال عند النقر على زر الإغلاق
+    closeModal.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+
+    // إغلاق المودال عند النقر خارج الصورة
+    window.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // الانتقال إلى الصورة السابقة
+    prevBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex === 0) ? imageLinks.length - 1 : currentIndex - 1;
+      modalImage.src = imageLinks[currentIndex];
+    });
+
+    // الانتقال إلى الصورة التالية
+    nextBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex === imageLinks.length - 1) ? 0 : currentIndex + 1;
+      modalImage.src = imageLinks[currentIndex];
+    });
+  </script>
 
 </body>
 </html>
