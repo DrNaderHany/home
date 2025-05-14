@@ -50,11 +50,11 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .testimonial img {
-     width: 100%;
+  width: 100%; /* لتغطية العرض بالكامل */
+  height: 250px; /* تحديد ارتفاع مناسب */
+  object-fit: cover; /* لملء المساحة مع الحفاظ على النسبة */
   border-radius: 8px;
-  max-height: 200px;
-  object-fit: contain;
-    }
+}
     footer {
       background: #eee;
       text-align: center;
