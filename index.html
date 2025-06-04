@@ -1,1003 +1,383 @@
-
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<title>Seating Chart</title>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<style>
-    .scroll-container {
-      max-width: 100%;
-      overflow-x: auto;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>منصة نادر هاني التعليمية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+  background: linear-gradient(135deg, #004080, #0066cc);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeInDown 1.5s ease-out;
+}
+
+header h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  animation: slideInLeft 1s ease-out;
+}
+
+header p {
+  font-size: 1.4em;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  animation: slideInRight 1s ease-out;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #25D366;
+  color: white;
+  font-size: 1.2em;
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: fadeInUp 2s ease-out;
+}
+
+.cta-button:hover {
+  background-color: #1ebe5b;
+  transform: scale(1.05);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+    .content {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      border-right: 5px solid #004080;
+      padding-right: 10px;
+      color: #004080;
+    }
+    ul {
+      list-style: square;
+      padding-right: 20px;
+    }
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .testimonial {
+      background: white;
       padding: 10px;
-      box-sizing: border-box;
-    }
-
-    .chart-wrapper {
-      display: inline-block;
-      border: 3px solid black;
-      border-radius: 16px;
-      padding: 30px;
-      background-color: white;
-      min-width: 1100px;
-      box-sizing: border-box;
-    }
-
-    .stage-tables {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-      gap: 40px;
-    }
-
-    .stage {
-      width: 200px;
-      height: 80px;
-      background-color: #333;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
+      border: 1px solid #ddd;
       border-radius: 8px;
-      font-size: 18px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-
-    .tables-left, .tables-right {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .testimonial img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
     }
-
-    .tables-front {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-    }
-
-    .table {
-      width: 60px;
-      height: 60px;
-      background-color: #ccc;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    .seating-area-columned {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .seat-row {
-      display: flex;
-      justify-content: flex-start;
-      width: max-content;
-    }
-
-    .seat-group {
-      display: flex;
-      gap: 4px;
-      margin-right: 16px;
-    }
-
-    .seat-group:nth-child(2n) {
-      margin-right: 60px;
-    }
-
-    .seat {
-      width: 28px;
-      height: 28px;
-      background-color: grey;
-      color: white;
-      font-size: 10px;
-      border-radius: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .legend {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
+    footer {
+      background: #eee;
+      text-align: center;
+      padding: 15px;
       font-size: 14px;
-      margin-top: 20px;
+      color: #666;
     }
-
-    .legend-item {
+    .floating-buttons {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
       display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+    .floating-buttons a {
+      display: inline-flex;
+      justify-content: center;
       align-items: center;
-      gap: 8px;
+      background-color: transparent;
+      color: #25d366;
+      font-size: 36px;
+      text-decoration: none;
+    }
+    .floating-buttons a.telegram {
+      color: #0088cc;
+    }
+     /* مودال */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      height: 90%;
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+    .modal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* لضمان عرض الصورة بالكامل مع الحفاظ على النسبة */
+      border-radius: 10px;
+    }
+   .close {
+      position: absolute;
+      top: 5%;
+      right: 5%;
+      font-size: 40px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      border-radius: 50%;
+      padding: 5px 10px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .close:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    /* أسهم التنقل */
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .prev {
+      right: 10px; /* تعديل للموقع ليكون في جهة اليمين */
+    }
+    .next {
+      left: 10px; /* تعديل للموقع ليكون في جهة اليسار */
+    }
+    .prev:hover, .next:hover {
+      background: rgba(0, 0, 0, 0.7);
     }
 
-    .legend-box {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
+     /* تحسين الزر الإغلاق على الموبايل */
+    @media (max-width: 600px) {
+      .close {
+        top: 3%;
+        right: 3%;
+        font-size: 30px;
+        padding: 3px 8px;
+      }
     }
-
-    .legend-available {
-      background-color: grey;
-    }
-
-    .legend-reserved {
-      background-color: #5d2977;
-    }
-  
-  html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .scroll-container {
-    max-width: 100%;
-    max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-
-  @media (max-width: 768px) {
-  .chart-wrapper {
-    transform: scale(0.75);
-    transform-origin: top left;
-    min-width: auto;
-  }
-
-  .seat {
-    width: 20px;
-    height: 20px;
-    font-size: 8px;
-  }
-
-  .table {
-    width: 40px;
-    height: 40px;
-    font-size: 12px;
-  }
-
-  .stage {
-    width: 140px;
-    height: 60px;
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .chart-wrapper {
-    transform: scale(0.6);
-    transform-origin: top left;
-  }
-
-  .seat {
-    width: 16px;
-    height: 16px;
-    font-size: 7px;
-  }
-
-  .table {
-    width: 35px;
-    height: 35px;
-    font-size: 10px;
-  }
-
-  .stage {
-    width: 120px;
-    height: 50px;
-    font-size: 12px;
-  }
-}
-
-
-.seating-area-columned > .seat-row {
-  display: flex;
-  align-items: center;
-}
-</style>
+  </style>
 </head>
 <body>
-<!-- Trigger Link -->
-<div class="container mt-4 text-center">
-<a class="btn btn-primary" data-bs-target="#seatingChartModal" data-bs-toggle="modal" href="#">
-    View Seating Chart
+
+  <header>
+  <h1>مرحباً بك</h1>
+  <p>🚀 استعد لتتفوّق في موادك الجامعية! تعلّم بذكاء، افهم بعمق، وكن في الصدارة! 🎯</p>
+  <a class="cta-button" href="https://wa.me/966553198965?text=مرحباً%20دكتور،%20أريد%20الإشتراك%20معك%20في%20مادة%20..." target="_blank">
+    ابدأ الآن  
   </a>
-</div>
-<!-- Modal -->
-<div aria-hidden="true" aria-labelledby="seatingChartLabel" class="modal fade" id="seatingChartModal" tabindex="-1">
-<div class="modal-dialog modal-xl modal-dialog-scrollable">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title" id="seatingChartLabel">Seating Chart</h5>
-<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-</div>
-<div class="modal-body">
-<div class="scroll-container">
-<div class="chart-wrapper">
-<div class="stage-tables">
-<div class="tables-left d-flex flex-row gap-3">
-<div class="table">T1</div>
-<div class="table">T2</div>
-</div>
-<div class="stage">STAGE</div>
-<div class="tables-right d-flex flex-row gap-3">
-<div class="table">T3</div>
-<div class="table">T4</div>
-</div>
-</div>
-<div class="tables-front">
-<div class="table">T5</div><div class="table">T6</div><div class="table">T7</div><div class="table">T8</div>
-<div class="table">T9</div><div class="table">T10</div><div class="table">T11</div><div class="table">T12</div>
-<div class="table">T13</div><div class="table">T14</div>
-</div>
-<div class="seating-area-columned">
-<div class="seating-area-columned">
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">A</div>
-<div class="seat-group">
-<div class="seat">A1</div>
-<div class="seat">A2</div>
-<div class="seat">A3</div>
-<div class="seat">A4</div>
-<div class="seat">A5</div>
-<div class="seat">A6</div>
-<div class="seat">A7</div>
-<div class="seat">A8</div>
-<div class="seat">A9</div>
-<div class="seat">A10</div>
-</div>
-<div class="seat-group">
-<div class="seat">A11</div>
-<div class="seat">A12</div>
-<div class="seat">A13</div>
-<div class="seat">A14</div>
-<div class="seat">A15</div>
-<div class="seat">A16</div>
-<div class="seat">A17</div>
-<div class="seat">A18</div>
-<div class="seat">A19</div>
-<div class="seat">A20</div>
-</div>
-<div class="seat-group">
-<div class="seat">A21</div>
-<div class="seat">A22</div>
-<div class="seat">A23</div>
-<div class="seat">A24</div>
-<div class="seat">A25</div>
-<div class="seat">A26</div>
-<div class="seat">A27</div>
-<div class="seat">A28</div>
-<div class="seat">A29</div>
-<div class="seat">A30</div>
-</div>
-<div class="seat-group">
-<div class="seat">A31</div>
-<div class="seat">A32</div>
-<div class="seat">A33</div>
-<div class="seat">A34</div>
-<div class="seat">A35</div>
-<div class="seat">A36</div>
-<div class="seat">A37</div>
-<div class="seat">A38</div>
-<div class="seat">A39</div>
-<div class="seat">A40</div>
-</div>
-<div class="seat-group">
-<div class="seat">A41</div>
-<div class="seat">A42</div>
-<div class="seat">A43</div>
-<div class="seat">A44</div>
-<div class="seat">A45</div>
-<div class="seat">A46</div>
-<div class="seat">A47</div>
-<div class="seat">A48</div>
-<div class="seat">A49</div>
-<div class="seat">A50</div>
-</div>
-<div class="seat-group">
-<div class="seat">A51</div>
-<div class="seat">A52</div>
-<div class="seat">A53</div>
-<div class="seat">A54</div>
-<div class="seat">A55</div>
-<div class="seat">A56</div>
-<div class="seat">A57</div>
-<div class="seat">A58</div>
-<div class="seat">A59</div>
-<div class="seat">A60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">B</div>
-<div class="seat-group">
-<div class="seat">B1</div>
-<div class="seat">B2</div>
-<div class="seat">B3</div>
-<div class="seat">B4</div>
-<div class="seat">B5</div>
-<div class="seat">B6</div>
-<div class="seat">B7</div>
-<div class="seat">B8</div>
-<div class="seat">B9</div>
-<div class="seat">B10</div>
-</div>
-<div class="seat-group">
-<div class="seat">B11</div>
-<div class="seat">B12</div>
-<div class="seat">B13</div>
-<div class="seat">B14</div>
-<div class="seat">B15</div>
-<div class="seat">B16</div>
-<div class="seat">B17</div>
-<div class="seat">B18</div>
-<div class="seat">B19</div>
-<div class="seat">B20</div>
-</div>
-<div class="seat-group">
-<div class="seat">B21</div>
-<div class="seat">B22</div>
-<div class="seat">B23</div>
-<div class="seat">B24</div>
-<div class="seat">B25</div>
-<div class="seat">B26</div>
-<div class="seat">B27</div>
-<div class="seat">B28</div>
-<div class="seat">B29</div>
-<div class="seat">B30</div>
-</div>
-<div class="seat-group">
-<div class="seat">B31</div>
-<div class="seat">B32</div>
-<div class="seat">B33</div>
-<div class="seat">B34</div>
-<div class="seat">B35</div>
-<div class="seat">B36</div>
-<div class="seat">B37</div>
-<div class="seat">B38</div>
-<div class="seat">B39</div>
-<div class="seat">B40</div>
-</div>
-<div class="seat-group">
-<div class="seat">B41</div>
-<div class="seat">B42</div>
-<div class="seat">B43</div>
-<div class="seat">B44</div>
-<div class="seat">B45</div>
-<div class="seat">B46</div>
-<div class="seat">B47</div>
-<div class="seat">B48</div>
-<div class="seat">B49</div>
-<div class="seat">B50</div>
-</div>
-<div class="seat-group">
-<div class="seat">B51</div>
-<div class="seat">B52</div>
-<div class="seat">B53</div>
-<div class="seat">B54</div>
-<div class="seat">B55</div>
-<div class="seat">B56</div>
-<div class="seat">B57</div>
-<div class="seat">B58</div>
-<div class="seat">B59</div>
-<div class="seat">B60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">C</div>
-<div class="seat-group">
-<div class="seat">C1</div>
-<div class="seat">C2</div>
-<div class="seat">C3</div>
-<div class="seat">C4</div>
-<div class="seat">C5</div>
-<div class="seat">C6</div>
-<div class="seat">C7</div>
-<div class="seat">C8</div>
-<div class="seat">C9</div>
-<div class="seat">C10</div>
-</div>
-<div class="seat-group">
-<div class="seat">C11</div>
-<div class="seat">C12</div>
-<div class="seat">C13</div>
-<div class="seat">C14</div>
-<div class="seat">C15</div>
-<div class="seat">C16</div>
-<div class="seat">C17</div>
-<div class="seat">C18</div>
-<div class="seat">C19</div>
-<div class="seat">C20</div>
-</div>
-<div class="seat-group">
-<div class="seat">C21</div>
-<div class="seat">C22</div>
-<div class="seat">C23</div>
-<div class="seat">C24</div>
-<div class="seat">C25</div>
-<div class="seat">C26</div>
-<div class="seat">C27</div>
-<div class="seat">C28</div>
-<div class="seat">C29</div>
-<div class="seat">C30</div>
-</div>
-<div class="seat-group">
-<div class="seat">C31</div>
-<div class="seat">C32</div>
-<div class="seat">C33</div>
-<div class="seat">C34</div>
-<div class="seat">C35</div>
-<div class="seat">C36</div>
-<div class="seat">C37</div>
-<div class="seat">C38</div>
-<div class="seat">C39</div>
-<div class="seat">C40</div>
-</div>
-<div class="seat-group">
-<div class="seat">C41</div>
-<div class="seat">C42</div>
-<div class="seat">C43</div>
-<div class="seat">C44</div>
-<div class="seat">C45</div>
-<div class="seat">C46</div>
-<div class="seat">C47</div>
-<div class="seat">C48</div>
-<div class="seat">C49</div>
-<div class="seat">C50</div>
-</div>
-<div class="seat-group">
-<div class="seat">C51</div>
-<div class="seat">C52</div>
-<div class="seat">C53</div>
-<div class="seat">C54</div>
-<div class="seat">C55</div>
-<div class="seat">C56</div>
-<div class="seat">C57</div>
-<div class="seat">C58</div>
-<div class="seat">C59</div>
-<div class="seat">C60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">D</div>
-<div class="seat-group">
-<div class="seat">D1</div>
-<div class="seat">D2</div>
-<div class="seat">D3</div>
-<div class="seat">D4</div>
-<div class="seat">D5</div>
-<div class="seat">D6</div>
-<div class="seat">D7</div>
-<div class="seat">D8</div>
-<div class="seat">D9</div>
-<div class="seat">D10</div>
-</div>
-<div class="seat-group">
-<div class="seat">D11</div>
-<div class="seat">D12</div>
-<div class="seat">D13</div>
-<div class="seat">D14</div>
-<div class="seat">D15</div>
-<div class="seat">D16</div>
-<div class="seat">D17</div>
-<div class="seat">D18</div>
-<div class="seat">D19</div>
-<div class="seat">D20</div>
-</div>
-<div class="seat-group">
-<div class="seat">D21</div>
-<div class="seat">D22</div>
-<div class="seat">D23</div>
-<div class="seat">D24</div>
-<div class="seat">D25</div>
-<div class="seat">D26</div>
-<div class="seat">D27</div>
-<div class="seat">D28</div>
-<div class="seat">D29</div>
-<div class="seat">D30</div>
-</div>
-<div class="seat-group">
-<div class="seat">D31</div>
-<div class="seat">D32</div>
-<div class="seat">D33</div>
-<div class="seat">D34</div>
-<div class="seat">D35</div>
-<div class="seat">D36</div>
-<div class="seat">D37</div>
-<div class="seat">D38</div>
-<div class="seat">D39</div>
-<div class="seat">D40</div>
-</div>
-<div class="seat-group">
-<div class="seat">D41</div>
-<div class="seat">D42</div>
-<div class="seat">D43</div>
-<div class="seat">D44</div>
-<div class="seat">D45</div>
-<div class="seat">D46</div>
-<div class="seat">D47</div>
-<div class="seat">D48</div>
-<div class="seat">D49</div>
-<div class="seat">D50</div>
-</div>
-<div class="seat-group">
-<div class="seat">D51</div>
-<div class="seat">D52</div>
-<div class="seat">D53</div>
-<div class="seat">D54</div>
-<div class="seat">D55</div>
-<div class="seat">D56</div>
-<div class="seat">D57</div>
-<div class="seat">D58</div>
-<div class="seat">D59</div>
-<div class="seat">D60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">E</div>
-<div class="seat-group">
-<div class="seat">E1</div>
-<div class="seat">E2</div>
-<div class="seat">E3</div>
-<div class="seat">E4</div>
-<div class="seat">E5</div>
-<div class="seat">E6</div>
-<div class="seat">E7</div>
-<div class="seat">E8</div>
-<div class="seat">E9</div>
-<div class="seat">E10</div>
-</div>
-<div class="seat-group">
-<div class="seat">E11</div>
-<div class="seat">E12</div>
-<div class="seat">E13</div>
-<div class="seat">E14</div>
-<div class="seat">E15</div>
-<div class="seat">E16</div>
-<div class="seat">E17</div>
-<div class="seat">E18</div>
-<div class="seat">E19</div>
-<div class="seat">E20</div>
-</div>
-<div class="seat-group">
-<div class="seat">E21</div>
-<div class="seat">E22</div>
-<div class="seat">E23</div>
-<div class="seat">E24</div>
-<div class="seat">E25</div>
-<div class="seat">E26</div>
-<div class="seat">E27</div>
-<div class="seat">E28</div>
-<div class="seat">E29</div>
-<div class="seat">E30</div>
-</div>
-<div class="seat-group">
-<div class="seat">E31</div>
-<div class="seat">E32</div>
-<div class="seat">E33</div>
-<div class="seat">E34</div>
-<div class="seat">E35</div>
-<div class="seat">E36</div>
-<div class="seat">E37</div>
-<div class="seat">E38</div>
-<div class="seat">E39</div>
-<div class="seat">E40</div>
-</div>
-<div class="seat-group">
-<div class="seat">E41</div>
-<div class="seat">E42</div>
-<div class="seat">E43</div>
-<div class="seat">E44</div>
-<div class="seat">E45</div>
-<div class="seat">E46</div>
-<div class="seat">E47</div>
-<div class="seat">E48</div>
-<div class="seat">E49</div>
-<div class="seat">E50</div>
-</div>
-<div class="seat-group">
-<div class="seat">E51</div>
-<div class="seat">E52</div>
-<div class="seat">E53</div>
-<div class="seat">E54</div>
-<div class="seat">E55</div>
-<div class="seat">E56</div>
-<div class="seat">E57</div>
-<div class="seat">E58</div>
-<div class="seat">E59</div>
-<div class="seat">E60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">F</div>
-<div class="seat-group">
-<div class="seat">F1</div>
-<div class="seat">F2</div>
-<div class="seat">F3</div>
-<div class="seat">F4</div>
-<div class="seat">F5</div>
-<div class="seat">F6</div>
-<div class="seat">F7</div>
-<div class="seat">F8</div>
-<div class="seat">F9</div>
-<div class="seat">F10</div>
-</div>
-<div class="seat-group">
-<div class="seat">F11</div>
-<div class="seat">F12</div>
-<div class="seat">F13</div>
-<div class="seat">F14</div>
-<div class="seat">F15</div>
-<div class="seat">F16</div>
-<div class="seat">F17</div>
-<div class="seat">F18</div>
-<div class="seat">F19</div>
-<div class="seat">F20</div>
-</div>
-<div class="seat-group">
-<div class="seat">F21</div>
-<div class="seat">F22</div>
-<div class="seat">F23</div>
-<div class="seat">F24</div>
-<div class="seat">F25</div>
-<div class="seat">F26</div>
-<div class="seat">F27</div>
-<div class="seat">F28</div>
-<div class="seat">F29</div>
-<div class="seat">F30</div>
-</div>
-<div class="seat-group">
-<div class="seat">F31</div>
-<div class="seat">F32</div>
-<div class="seat">F33</div>
-<div class="seat">F34</div>
-<div class="seat">F35</div>
-<div class="seat">F36</div>
-<div class="seat">F37</div>
-<div class="seat">F38</div>
-<div class="seat">F39</div>
-<div class="seat">F40</div>
-</div>
-<div class="seat-group">
-<div class="seat">F41</div>
-<div class="seat">F42</div>
-<div class="seat">F43</div>
-<div class="seat">F44</div>
-<div class="seat">F45</div>
-<div class="seat">F46</div>
-<div class="seat">F47</div>
-<div class="seat">F48</div>
-<div class="seat">F49</div>
-<div class="seat">F50</div>
-</div>
-<div class="seat-group">
-<div class="seat">F51</div>
-<div class="seat">F52</div>
-<div class="seat">F53</div>
-<div class="seat">F54</div>
-<div class="seat">F55</div>
-<div class="seat">F56</div>
-<div class="seat">F57</div>
-<div class="seat">F58</div>
-<div class="seat">F59</div>
-<div class="seat">F60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">G</div>
-<div class="seat-group">
-<div class="seat">G1</div>
-<div class="seat">G2</div>
-<div class="seat">G3</div>
-<div class="seat">G4</div>
-<div class="seat">G5</div>
-<div class="seat">G6</div>
-<div class="seat">G7</div>
-<div class="seat">G8</div>
-<div class="seat">G9</div>
-<div class="seat">G10</div>
-</div>
-<div class="seat-group">
-<div class="seat">G11</div>
-<div class="seat">G12</div>
-<div class="seat">G13</div>
-<div class="seat">G14</div>
-<div class="seat">G15</div>
-<div class="seat">G16</div>
-<div class="seat">G17</div>
-<div class="seat">G18</div>
-<div class="seat">G19</div>
-<div class="seat">G20</div>
-</div>
-<div class="seat-group">
-<div class="seat">G21</div>
-<div class="seat">G22</div>
-<div class="seat">G23</div>
-<div class="seat">G24</div>
-<div class="seat">G25</div>
-<div class="seat">G26</div>
-<div class="seat">G27</div>
-<div class="seat">G28</div>
-<div class="seat">G29</div>
-<div class="seat">G30</div>
-</div>
-<div class="seat-group">
-<div class="seat">G31</div>
-<div class="seat">G32</div>
-<div class="seat">G33</div>
-<div class="seat">G34</div>
-<div class="seat">G35</div>
-<div class="seat">G36</div>
-<div class="seat">G37</div>
-<div class="seat">G38</div>
-<div class="seat">G39</div>
-<div class="seat">G40</div>
-</div>
-<div class="seat-group">
-<div class="seat">G41</div>
-<div class="seat">G42</div>
-<div class="seat">G43</div>
-<div class="seat">G44</div>
-<div class="seat">G45</div>
-<div class="seat">G46</div>
-<div class="seat">G47</div>
-<div class="seat">G48</div>
-<div class="seat">G49</div>
-<div class="seat">G50</div>
-</div>
-<div class="seat-group">
-<div class="seat">G51</div>
-<div class="seat">G52</div>
-<div class="seat">G53</div>
-<div class="seat">G54</div>
-<div class="seat">G55</div>
-<div class="seat">G56</div>
-<div class="seat">G57</div>
-<div class="seat">G58</div>
-<div class="seat">G59</div>
-<div class="seat">G60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">H</div>
-<div class="seat-group">
-<div class="seat">H1</div>
-<div class="seat">H2</div>
-<div class="seat">H3</div>
-<div class="seat">H4</div>
-<div class="seat">H5</div>
-<div class="seat">H6</div>
-<div class="seat">H7</div>
-<div class="seat">H8</div>
-<div class="seat">H9</div>
-<div class="seat">H10</div>
-</div>
-<div class="seat-group">
-<div class="seat">H11</div>
-<div class="seat">H12</div>
-<div class="seat">H13</div>
-<div class="seat">H14</div>
-<div class="seat">H15</div>
-<div class="seat">H16</div>
-<div class="seat">H17</div>
-<div class="seat">H18</div>
-<div class="seat">H19</div>
-<div class="seat">H20</div>
-</div>
-<div class="seat-group">
-<div class="seat">H21</div>
-<div class="seat">H22</div>
-<div class="seat">H23</div>
-<div class="seat">H24</div>
-<div class="seat">H25</div>
-<div class="seat">H26</div>
-<div class="seat">H27</div>
-<div class="seat">H28</div>
-<div class="seat">H29</div>
-<div class="seat">H30</div>
-</div>
-<div class="seat-group">
-<div class="seat">H31</div>
-<div class="seat">H32</div>
-<div class="seat">H33</div>
-<div class="seat">H34</div>
-<div class="seat">H35</div>
-<div class="seat">H36</div>
-<div class="seat">H37</div>
-<div class="seat">H38</div>
-<div class="seat">H39</div>
-<div class="seat">H40</div>
-</div>
-<div class="seat-group">
-<div class="seat">H41</div>
-<div class="seat">H42</div>
-<div class="seat">H43</div>
-<div class="seat">H44</div>
-<div class="seat">H45</div>
-<div class="seat">H46</div>
-<div class="seat">H47</div>
-<div class="seat">H48</div>
-<div class="seat">H49</div>
-<div class="seat">H50</div>
-</div>
-<div class="seat-group">
-<div class="seat">H51</div>
-<div class="seat">H52</div>
-<div class="seat">H53</div>
-<div class="seat">H54</div>
-<div class="seat">H55</div>
-<div class="seat">H56</div>
-<div class="seat">H57</div>
-<div class="seat">H58</div>
-<div class="seat">H59</div>
-<div class="seat">H60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">I</div>
-<div class="seat-group">
-<div class="seat">I1</div>
-<div class="seat">I2</div>
-<div class="seat">I3</div>
-<div class="seat">I4</div>
-<div class="seat">I5</div>
-<div class="seat">I6</div>
-<div class="seat">I7</div>
-<div class="seat">I8</div>
-<div class="seat">I9</div>
-<div class="seat">I10</div>
-</div>
-<div class="seat-group">
-<div class="seat">I11</div>
-<div class="seat">I12</div>
-<div class="seat">I13</div>
-<div class="seat">I14</div>
-<div class="seat">I15</div>
-<div class="seat">I16</div>
-<div class="seat">I17</div>
-<div class="seat">I18</div>
-<div class="seat">I19</div>
-<div class="seat">I20</div>
-</div>
-<div class="seat-group">
-<div class="seat">I21</div>
-<div class="seat">I22</div>
-<div class="seat">I23</div>
-<div class="seat">I24</div>
-<div class="seat">I25</div>
-<div class="seat">I26</div>
-<div class="seat">I27</div>
-<div class="seat">I28</div>
-<div class="seat">I29</div>
-<div class="seat">I30</div>
-</div>
-<div class="seat-group">
-<div class="seat">I31</div>
-<div class="seat">I32</div>
-<div class="seat">I33</div>
-<div class="seat">I34</div>
-<div class="seat">I35</div>
-<div class="seat">I36</div>
-<div class="seat">I37</div>
-<div class="seat">I38</div>
-<div class="seat">I39</div>
-<div class="seat">I40</div>
-</div>
-<div class="seat-group">
-<div class="seat">I41</div>
-<div class="seat">I42</div>
-<div class="seat">I43</div>
-<div class="seat">I44</div>
-<div class="seat">I45</div>
-<div class="seat">I46</div>
-<div class="seat">I47</div>
-<div class="seat">I48</div>
-<div class="seat">I49</div>
-<div class="seat">I50</div>
-</div>
-<div class="seat-group">
-<div class="seat">I51</div>
-<div class="seat">I52</div>
-<div class="seat">I53</div>
-<div class="seat">I54</div>
-<div class="seat">I55</div>
-<div class="seat">I56</div>
-<div class="seat">I57</div>
-<div class="seat">I58</div>
-<div class="seat">I59</div>
-<div class="seat">I60</div>
-</div>
-</div>
-<div class="seat-row"><div class="seat-label" style="width: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold;">J</div>
-<div class="seat-group">
-<div class="seat">J1</div>
-<div class="seat">J2</div>
-<div class="seat">J3</div>
-<div class="seat">J4</div>
-<div class="seat">J5</div>
-<div class="seat">J6</div>
-<div class="seat">J7</div>
-<div class="seat">J8</div>
-<div class="seat">J9</div>
-<div class="seat">J10</div>
-</div>
-<div class="seat-group">
-<div class="seat">J11</div>
-<div class="seat">J12</div>
-<div class="seat">J13</div>
-<div class="seat">J14</div>
-<div class="seat">J15</div>
-<div class="seat">J16</div>
-<div class="seat">J17</div>
-<div class="seat">J18</div>
-<div class="seat">J19</div>
-<div class="seat">J20</div>
-</div>
-<div class="seat-group">
-<div class="seat">J21</div>
-<div class="seat">J22</div>
-<div class="seat">J23</div>
-<div class="seat">J24</div>
-<div class="seat">J25</div>
-<div class="seat">J26</div>
-<div class="seat">J27</div>
-<div class="seat">J28</div>
-<div class="seat">J29</div>
-<div class="seat">J30</div>
-</div>
-<div class="seat-group">
-<div class="seat">J31</div>
-<div class="seat">J32</div>
-<div class="seat">J33</div>
-<div class="seat">J34</div>
-<div class="seat">J35</div>
-<div class="seat">J36</div>
-<div class="seat">J37</div>
-<div class="seat">J38</div>
-<div class="seat">J39</div>
-<div class="seat">J40</div>
-</div>
-<div class="seat-group">
-<div class="seat">J41</div>
-<div class="seat">J42</div>
-<div class="seat">J43</div>
-<div class="seat">J44</div>
-<div class="seat">J45</div>
-<div class="seat">J46</div>
-<div class="seat">J47</div>
-<div class="seat">J48</div>
-<div class="seat">J49</div>
-<div class="seat">J50</div>
-</div>
-<div class="seat-group">
-<div class="seat">J51</div>
-<div class="seat">J52</div>
-<div class="seat">J53</div>
-<div class="seat">J54</div>
-<div class="seat">J55</div>
-<div class="seat">J56</div>
-<div class="seat">J57</div>
-<div class="seat">J58</div>
-<div class="seat">J59</div>
-<div class="seat">J60</div>
-</div>
-</div>
-</div>
-</div>
-<div class="legend">
-<div class="legend-item">
-<div class="legend-box legend-available"></div> Available
-            </div>
-<div class="legend-item">
-<div class="legend-box legend-reserved"></div> Reserved
-            </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</header>
+
+  
+  <div class="content">
+    <div class="section">
+      <h2>المواد التي أشرحها</h2>
+      <ul>
+        <li>مقدمة في البرمجة بالجافا CSC 1103 </li>
+        <li>مقدمة في البرمجة بالبايثون CSC 1103</li>
+        <li>حزم إحصائية STAT 1102</li>
+        <li>حل مشكلات بالحوسبة CSC 1102</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>آراء بعض الطلاب</h2>
+      <div class="testimonials">
+        <div class="testimonial">
+          <img src="images/1.jpg" alt="رأي طالب" class="image-item">
+        </div>
+        
+         <div class="testimonial">
+          <img src="images/3.jpg" alt="رأي طالب" class="image-item">
+        </div>
+         <div class="testimonial">
+          <img src="images/4.jpg" alt="رأي طالب" class="image-item">
+        </div>
+         <div class="testimonial">
+          <img src="images/5.jpg" alt="رأي طالب" class="image-item">
+        </div>
+         <div class="testimonial">
+          <img src="images/6.jpg" alt="رأي طالب" class="image-item">
+        </div>
+         <div class="testimonial">
+          <img src="images/7.jpg" alt="رأي طالب" class="image-item">
+        </div>
+        <div class="testimonial">
+          <img src="images/8.jpg" alt="رأي طالب" class="image-item">
+        </div>
+        <div class="testimonial">
+          <img src="images/9.jpg" alt="رأي طالب" class="image-item">
+        </div>
+       
+        <!-- أضف المزيد من الصور هنا -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    جميع الحقوق محفوظة © نادر هاني
+  </footer>
+
+  <!-- أزرار عائمة -->
+  <div class="floating-buttons">
+    <a href="https://wa.me/966553198965" target="_blank" title="تواصل واتساب">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://t.me/prof_Nader" target="_blank" class="telegram" title="تواصل تلجرام">
+      <i class="fab fa-telegram-plane"></i>
+    </a>
+  </div>
+
+  <!-- نافذة عرض الصورة الكبيرة -->
+  <div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="صورة كبيرة">
+    </div>
+    <span class="prev">&#10094;</span>
+    <span class="next">&#10095;</span>
+  </div>
+
+  <script>
+    // تفعيل فتح النافذة عند النقر على الصور
+    const images = document.querySelectorAll('.image-item');
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.close');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let currentIndex = 0;
+
+    // تخزين روابط الصور في مصفوفة
+    const imageLinks = Array.from(images).map(image => image.src);
+
+    // فتح المودال مع عرض الصورة المختارة
+    images.forEach((image, index) => {
+      image.addEventListener('click', function() {
+        modal.style.display = 'flex';
+        modalImage.src = image.src;
+        currentIndex = index; // تعيين الفهرس الحالي
+      });
+    });
+
+    // إغلاق المودال عند النقر على زر الإغلاق
+    closeModal.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+
+    // إغلاق المودال عند النقر خارج الصورة
+    window.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // الانتقال إلى الصورة السابقة
+    prevBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex === imageLinks.length - 1) ? 0 : currentIndex + 1; // تعديل
+      modalImage.src = imageLinks[currentIndex];
+    });
+
+    // الانتقال إلى الصورة التالية
+    nextBtn.addEventListener('click', function() {
+      currentIndex = (currentIndex === 0) ? imageLinks.length - 1 : currentIndex - 1; // تعديل
+      modalImage.src = imageLinks[currentIndex];
+    });
+  </script>
+
 </body>
 </html>
