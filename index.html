@@ -4,154 +4,121 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>منصة نادر هاني التعليمية</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    :root {
+      --primary: #00c8ff;
+      --accent: #25D366;
+      --bg: #0e0e0e;
+      --text: #eaeaea;
+      --header-bg: linear-gradient(135deg, #1a1a1a, #202020);
+    }
+
     body {
       font-family: 'Tahoma', sans-serif;
-      background-color: #f9f9f9;
       margin: 0;
       padding: 0;
-      color: #333;
+      background-color: var(--bg);
+      color: var(--text);
     }
+
     header {
-  background: linear-gradient(135deg, #004080, #0066cc);
-  color: white;
-  padding: 40px 20px;
-  text-align: center;
-  border-radius: 0 0 30px 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  animation: fadeInDown 1.5s ease-out;
-}
+      background: var(--header-bg);
+      padding: 60px 20px 120px;
+      text-align: center;
+      border-radius: 0 0 50px 50px;
+      position: relative;
+      overflow: hidden;
+    }
 
-header h1 {
-  font-size: 3em;
-  margin-bottom: 10px;
-  animation: slideInLeft 1s ease-out;
-}
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: var(--primary);
+      animation: slideInLeft 1s ease-out;
+    }
 
-header p {
-  font-size: 1.4em;
-  max-width: 700px;
-  margin: 0 auto 20px;
-  animation: slideInRight 1s ease-out;
-}
+    header p {
+      font-size: 1.4em;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      animation: slideInRight 1s ease-out;
+    }
 
-.cta-button {
-  display: inline-block;
-  background-color: #25D366;
-  color: white;
-  font-size: 1.2em;
-  padding: 12px 25px;
-  border-radius: 30px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  animation: fadeInUp 2s ease-out;
-}
+    .cta-button {
+      background-color: var(--accent);
+      color: white;
+      font-size: 1.2em;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      animation: fadeInUp 2s ease-out;
+      display: inline-block;
+      margin-top: 20px;
+    }
 
-.cta-button:hover {
-  background-color: #1ebe5b;
-  transform: scale(1.05);
-}
+    .cta-button:hover {
+      background-color: #1ebe5b;
+      transform: scale(1.05);
+    }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 120px;
+      z-index: 1;
+    }
 
     .content {
       max-width: 1000px;
-      margin: 30px auto;
+      margin: 40px auto;
       padding: 0 20px;
+      position: relative;
+      z-index: 2;
     }
-    .section {
-      margin-bottom: 40px;
-    }
+
     h2 {
-      border-right: 5px solid #004080;
+      border-right: 5px solid var(--primary);
       padding-right: 10px;
-      color: #004080;
+      color: var(--primary);
     }
+
     ul {
       list-style: square;
       padding-right: 20px;
     }
+
     .testimonials {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 20px;
     }
+
     .testimonial {
-      background: white;
+      background: #1c1c1c;
       padding: 10px;
-      border: 1px solid #ddd;
       border-radius: 8px;
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
+
     .testimonial img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       border-radius: 8px;
     }
+
     footer {
-      background: #eee;
+      background: #111;
       text-align: center;
       padding: 15px;
       font-size: 14px;
-      color: #666;
+      color: #888;
     }
+
     .floating-buttons {
       position: fixed;
       left: 20px;
@@ -161,108 +128,100 @@ header p {
       gap: 10px;
       z-index: 1000;
     }
+
     .floating-buttons a {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      background-color: transparent;
-      color: #25d366;
       font-size: 36px;
-      text-decoration: none;
+      color: var(--accent);
     }
+
     .floating-buttons a.telegram {
       color: #0088cc;
     }
-     /* مودال */
+
+    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
       z-index: 1000;
     }
+
     .modal-content {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 90%;
-      height: 90%;
-      max-width: 90%;
-      max-height: 90%;
-      position: relative;
+      width: 90%; height: 90%;
     }
+
     .modal img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* لضمان عرض الصورة بالكامل مع الحفاظ على النسبة */
+      width: 100%; height: 100%;
+      object-fit: contain;
       border-radius: 10px;
     }
-   .close {
+
+    .close, .prev, .next {
       position: absolute;
-      top: 5%;
-      right: 5%;
-      font-size: 40px;
-      color: white;
-      background: rgba(0, 0, 0, 0.5);
-      border: none;
-      border-radius: 50%;
-      padding: 5px 10px;
-      cursor: pointer;
-      z-index: 1001;
-    }
-    .close:hover {
-      background: rgba(0, 0, 0, 0.7);
-    }
-    /* أسهم التنقل */
-    .prev, .next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       font-size: 30px;
       color: white;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px;
+      background: rgba(0,0,0,0.5);
       border-radius: 50%;
+      padding: 10px;
       cursor: pointer;
       z-index: 1001;
     }
-    .prev {
-      right: 10px; /* تعديل للموقع ليكون في جهة اليمين */
-    }
-    .next {
-      left: 10px; /* تعديل للموقع ليكون في جهة اليسار */
-    }
-    .prev:hover, .next:hover {
+
+    .close { top: 5%; right: 5%; }
+    .prev { right: 10px; top: 50%; transform: translateY(-50%); }
+    .next { left: 10px; top: 50%; transform: translateY(-50%); }
+
+    .close:hover, .prev:hover, .next:hover {
       background: rgba(0, 0, 0, 0.7);
     }
 
-     /* تحسين الزر الإغلاق على الموبايل */
     @media (max-width: 600px) {
-      .close {
-        top: 3%;
-        right: 3%;
-        font-size: 30px;
-        padding: 3px 8px;
-      }
+      .close { font-size: 24px; padding: 5px 8px; }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
   <header>
-  <h1>مرحباً بك</h1>
-  <p>🚀 استعد لتتفوّق في موادك الجامعية! تعلّم بذكاء، افهم بعمق، وكن في الصدارة! 🎯</p>
-  <a class="cta-button" href="https://wa.me/966553198965?text=مرحباً%20دكتور،%20أريد%20الإشتراك%20معك%20في%20مادة%20..." target="_blank">
-    ابدأ الآن  
-  </a>
-</header>
+    <h1>مرحباً بك</h1>
+    <p>🚀 استعد لتتفوّق في موادك الجامعية! تعلّم بذكاء، افهم بعمق، وكن في الصدارة! 🎯</p>
+    <a class="cta-button" href="https://wa.me/966553198965?text=مرحباً%20دكتور،%20أريد%20الإشتراك%20معك%20في%20مادة%20..." target="_blank">ابدأ الآن</a>
 
-  
+    <!-- موجة SVG متحركة -->
+    <svg class="wave" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <path fill="#0e0e0e">
+        <animate attributeName="d" dur="8s" repeatCount="indefinite"
+          values="
+            M0,80 C360,120 1080,40 1440,100 L1440,150 L0,150 Z;
+            M0,100 C400,20 1040,180 1440,60 L1440,150 L0,150 Z;
+            M0,80 C360,120 1080,40 1440,100 L1440,150 L0,150 Z
+          " />
+      </path>
+    </svg>
+  </header>
+
   <div class="content">
     <div class="section">
       <h2>المواد التي أشرحها</h2>
@@ -277,33 +236,14 @@ header p {
     <div class="section">
       <h2>آراء بعض الطلاب</h2>
       <div class="testimonials">
-        <div class="testimonial">
-          <img src="images/1.jpg" alt="رأي طالب" class="image-item">
-        </div>
-        
-         <div class="testimonial">
-          <img src="images/3.jpg" alt="رأي طالب" class="image-item">
-        </div>
-         <div class="testimonial">
-          <img src="images/4.jpg" alt="رأي طالب" class="image-item">
-        </div>
-         <div class="testimonial">
-          <img src="images/5.jpg" alt="رأي طالب" class="image-item">
-        </div>
-         <div class="testimonial">
-          <img src="images/6.jpg" alt="رأي طالب" class="image-item">
-        </div>
-         <div class="testimonial">
-          <img src="images/7.jpg" alt="رأي طالب" class="image-item">
-        </div>
-        <div class="testimonial">
-          <img src="images/8.jpg" alt="رأي طالب" class="image-item">
-        </div>
-        <div class="testimonial">
-          <img src="images/9.jpg" alt="رأي طالب" class="image-item">
-        </div>
-       
-        <!-- أضف المزيد من الصور هنا -->
+        <div class="testimonial"><img src="images/1.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/3.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/4.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/5.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/6.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/7.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/8.jpg" alt="رأي طالب" class="image-item"></div>
+        <div class="testimonial"><img src="images/9.jpg" alt="رأي طالب" class="image-item"></div>
       </div>
     </div>
   </div>
@@ -312,28 +252,19 @@ header p {
     جميع الحقوق محفوظة © نادر هاني
   </footer>
 
-  <!-- أزرار عائمة -->
   <div class="floating-buttons">
-    <a href="https://wa.me/966553198965" target="_blank" title="تواصل واتساب">
-      <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="https://t.me/prof_Nader" target="_blank" class="telegram" title="تواصل تلجرام">
-      <i class="fab fa-telegram-plane"></i>
-    </a>
+    <a href="https://wa.me/966553198965" target="_blank" title="تواصل واتساب"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/prof_Nader" target="_blank" class="telegram" title="تواصل تلجرام"><i class="fab fa-telegram-plane"></i></a>
   </div>
 
-  <!-- نافذة عرض الصورة الكبيرة -->
   <div id="modal" class="modal">
     <span class="close">&times;</span>
-    <div class="modal-content">
-      <img id="modalImage" src="" alt="صورة كبيرة">
-    </div>
+    <div class="modal-content"><img id="modalImage" src="" alt="صورة كبيرة"></div>
     <span class="prev">&#10094;</span>
     <span class="next">&#10095;</span>
   </div>
 
   <script>
-    // تفعيل فتح النافذة عند النقر على الصور
     const images = document.querySelectorAll('.image-item');
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modalImage');
@@ -342,39 +273,26 @@ header p {
     const nextBtn = document.querySelector('.next');
     let currentIndex = 0;
 
-    // تخزين روابط الصور في مصفوفة
     const imageLinks = Array.from(images).map(image => image.src);
 
-    // فتح المودال مع عرض الصورة المختارة
     images.forEach((image, index) => {
-      image.addEventListener('click', function() {
+      image.addEventListener('click', function () {
         modal.style.display = 'flex';
         modalImage.src = image.src;
-        currentIndex = index; // تعيين الفهرس الحالي
+        currentIndex = index;
       });
     });
 
-    // إغلاق المودال عند النقر على زر الإغلاق
-    closeModal.addEventListener('click', function() {
-      modal.style.display = 'none';
-    });
+    closeModal.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
 
-    // إغلاق المودال عند النقر خارج الصورة
-    window.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-
-    // الانتقال إلى الصورة السابقة
-    prevBtn.addEventListener('click', function() {
-      currentIndex = (currentIndex === imageLinks.length - 1) ? 0 : currentIndex + 1; // تعديل
+    prevBtn.addEventListener('click', function () {
+      currentIndex = (currentIndex + 1) % imageLinks.length;
       modalImage.src = imageLinks[currentIndex];
     });
 
-    // الانتقال إلى الصورة التالية
-    nextBtn.addEventListener('click', function() {
-      currentIndex = (currentIndex === 0) ? imageLinks.length - 1 : currentIndex - 1; // تعديل
+    nextBtn.addEventListener('click', function () {
+      currentIndex = (currentIndex - 1 + imageLinks.length) % imageLinks.length;
       modalImage.src = imageLinks[currentIndex];
     });
   </script>
