@@ -11,24 +11,36 @@
       --accent: #25D366;
       --bg: #0e0e0e;
       --text: #eaeaea;
-      --header-bg: linear-gradient(135deg, #1a1a1a, #202020);
     }
 
-    body {
-      font-family: 'Tahoma', sans-serif;
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       background-color: var(--bg);
       color: var(--text);
+      font-family: 'Tahoma', sans-serif;
+      overflow-x: hidden;
+    }
+
+    canvas#starfield {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    header, .content, footer, .floating-buttons {
+      position: relative;
+      z-index: 1;
     }
 
     header {
-      background: var(--header-bg);
       padding: 60px 20px 120px;
       text-align: center;
+      background: rgba(14,14,14,0.9);
       border-radius: 0 0 50px 50px;
-      position: relative;
-      overflow: hidden;
     }
 
     header h1 {
@@ -63,20 +75,10 @@
       transform: scale(1.05);
     }
 
-    .wave {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 120px;
-      z-index: 1;
-    }
-
     .content {
       max-width: 1000px;
       margin: 40px auto;
       padding: 0 20px;
-      position: relative;
-      z-index: 2;
     }
 
     h2 {
@@ -126,7 +128,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      z-index: 1000;
+      z-index: 1001;
     }
 
     .floating-buttons a {
@@ -182,10 +184,6 @@
       background: rgba(0, 0, 0, 0.7);
     }
 
-    @media (max-width: 600px) {
-      .close { font-size: 24px; padding: 5px 8px; }
-    }
-
     @keyframes slideInLeft {
       from { opacity: 0; transform: translateX(-50px); }
       to { opacity: 1; transform: translateX(0); }
@@ -204,98 +202,141 @@
 </head>
 <body>
 
-  <header>
-    <h1>مرحباً بك</h1>
-    <p>🚀 استعد لتتفوّق في موادك الجامعية! تعلّم بذكاء، افهم بعمق، وكن في الصدارة! 🎯</p>
-    <a class="cta-button" href="https://wa.me/966553198965?text=مرحباً%20دكتور،%20أريد%20الإشتراك%20معك%20في%20مادة%20..." target="_blank">ابدأ الآن</a>
+<!-- خلفية النجوم -->
+<canvas id="starfield"></canvas>
 
-    <!-- موجة SVG متحركة -->
-    <svg class="wave" viewBox="0 0 1440 150" preserveAspectRatio="none">
-      <path fill="#0e0e0e">
-        <animate attributeName="d" dur="8s" repeatCount="indefinite"
-          values="
-            M0,80 C360,120 1080,40 1440,100 L1440,150 L0,150 Z;
-            M0,100 C400,20 1040,180 1440,60 L1440,150 L0,150 Z;
-            M0,80 C360,120 1080,40 1440,100 L1440,150 L0,150 Z
-          " />
-      </path>
-    </svg>
-  </header>
+<header>
+  <h1>مرحباً بك</h1>
+  <p>🚀 استعد لتتفوّق في موادك الجامعية! تعلّم بذكاء، افهم بعمق، وكن في الصدارة! 🎯</p>
+  <a class="cta-button" href="https://wa.me/966553198965?text=مرحباً%20دكتور،%20أريد%20الإشتراك%20معك%20في%20مادة%20..." target="_blank">ابدأ الآن</a>
+</header>
 
-  <div class="content">
-    <div class="section">
-      <h2>المواد التي أشرحها</h2>
-      <ul>
-        <li>مقدمة في البرمجة بالجافا CSC 1103 </li>
-        <li>مقدمة في البرمجة بالبايثون CSC 1103</li>
-        <li>حزم إحصائية STAT 1102</li>
-        <li>حل مشكلات بالحوسبة CSC 1102</li>
-      </ul>
-    </div>
+<div class="content">
+  <div class="section">
+    <h2>المواد التي أشرحها</h2>
+    <ul>
+      <li>مقدمة في البرمجة بالجافا CSC 1103 </li>
+      <li>مقدمة في البرمجة بالبايثون CSC 1103</li>
+      <li>حزم إحصائية STAT 1102</li>
+      <li>حل مشكلات بالحوسبة CSC 1102</li>
+    </ul>
+  </div>
 
-    <div class="section">
-      <h2>آراء بعض الطلاب</h2>
-      <div class="testimonials">
-        <div class="testimonial"><img src="images/1.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/3.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/4.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/5.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/6.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/7.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/8.jpg" alt="رأي طالب" class="image-item"></div>
-        <div class="testimonial"><img src="images/9.jpg" alt="رأي طالب" class="image-item"></div>
-      </div>
+  <div class="section">
+    <h2>آراء بعض الطلاب</h2>
+    <div class="testimonials">
+      <div class="testimonial"><img src="images/1.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/3.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/4.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/5.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/6.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/7.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/8.jpg" class="image-item"></div>
+      <div class="testimonial"><img src="images/9.jpg" class="image-item"></div>
     </div>
   </div>
+</div>
 
-  <footer>
-    جميع الحقوق محفوظة © نادر هاني
-  </footer>
+<footer>
+  جميع الحقوق محفوظة © نادر هاني
+</footer>
 
-  <div class="floating-buttons">
-    <a href="https://wa.me/966553198965" target="_blank" title="تواصل واتساب"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://t.me/prof_Nader" target="_blank" class="telegram" title="تواصل تلجرام"><i class="fab fa-telegram-plane"></i></a>
-  </div>
+<div class="floating-buttons">
+  <a href="https://wa.me/966553198965" target="_blank" title="تواصل واتساب"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://t.me/prof_Nader" target="_blank" class="telegram" title="تواصل تلجرام"><i class="fab fa-telegram-plane"></i></a>
+</div>
 
-  <div id="modal" class="modal">
-    <span class="close">&times;</span>
-    <div class="modal-content"><img id="modalImage" src="" alt="صورة كبيرة"></div>
-    <span class="prev">&#10094;</span>
-    <span class="next">&#10095;</span>
-  </div>
+<div id="modal" class="modal">
+  <span class="close">&times;</span>
+  <div class="modal-content"><img id="modalImage" src="" alt="صورة كبيرة"></div>
+  <span class="prev">&#10094;</span>
+  <span class="next">&#10095;</span>
+</div>
 
-  <script>
-    const images = document.querySelectorAll('.image-item');
-    const modal = document.getElementById('modal');
-    const modalImage = document.getElementById('modalImage');
-    const closeModal = document.querySelector('.close');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
-    let currentIndex = 0;
+<!-- JavaScript for Starfield -->
+<script>
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
 
-    const imageLinks = Array.from(images).map(image => image.src);
+  let stars = [];
+  const numStars = 200;
 
-    images.forEach((image, index) => {
-      image.addEventListener('click', function () {
-        modal.style.display = 'flex';
-        modalImage.src = image.src;
-        currentIndex = index;
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function createStars() {
+    stars = [];
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5,
+        velocity: Math.random() * 0.5 + 0.2
       });
-    });
+    }
+  }
 
-    closeModal.addEventListener('click', () => modal.style.display = 'none');
-    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    for (let star of stars) {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+      ctx.fill();
+      star.y += star.velocity;
+      if (star.y > canvas.height) {
+        star.y = 0;
+        star.x = Math.random() * canvas.width;
+      }
+    }
+    requestAnimationFrame(drawStars);
+  }
 
-    prevBtn.addEventListener('click', function () {
-      currentIndex = (currentIndex + 1) % imageLinks.length;
-      modalImage.src = imageLinks[currentIndex];
-    });
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    createStars();
+  });
 
-    nextBtn.addEventListener('click', function () {
-      currentIndex = (currentIndex - 1 + imageLinks.length) % imageLinks.length;
-      modalImage.src = imageLinks[currentIndex];
+  resizeCanvas();
+  createStars();
+  drawStars();
+</script>
+
+<!-- Image Modal Script (كما هو سابقًا) -->
+<script>
+  const images = document.querySelectorAll('.image-item');
+  const modal = document.getElementById('modal');
+  const modalImage = document.getElementById('modalImage');
+  const closeModal = document.querySelector('.close');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+  let currentIndex = 0;
+
+  const imageLinks = Array.from(images).map(image => image.src);
+
+  images.forEach((image, index) => {
+    image.addEventListener('click', function () {
+      modal.style.display = 'flex';
+      modalImage.src = image.src;
+      currentIndex = index;
     });
-  </script>
+  });
+
+  closeModal.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+  prevBtn.addEventListener('click', function () {
+    currentIndex = (currentIndex + 1) % imageLinks.length;
+    modalImage.src = imageLinks[currentIndex];
+  });
+
+  nextBtn.addEventListener('click', function () {
+    currentIndex = (currentIndex - 1 + imageLinks.length) % imageLinks.length;
+    modalImage.src = imageLinks[currentIndex];
+  });
+</script>
 
 </body>
 </html>
