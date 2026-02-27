@@ -2,396 +2,237 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>منصة د. نادر هاني التعليمية</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --primary: #00e5ff; /* فيروزي مضيء */
-      --primary-dim: rgba(0, 229, 255, 0.15);
-      --accent-ws: #25D366; /* أخضر واتساب */
-      --accent-tg: #0088cc; /* أزرق تلجرام */
-      --bg-dark: #050505; /* أسود عميق جداً */
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --text-main: #f0f0f0;
-      --text-muted: #aaaaaa;
+      --primary: #00e5ff;
+      --primary-dim: rgba(0, 229, 255, 0.2);
+      --accent-ws: #25D366;
+      --accent-tg: #0088cc;
+      --bg-dark: #080808;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --text-main: #ffffff;
+      --text-muted: #cccccc;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; text-decoration: none !important; }
 
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
       font-family: 'Cairo', sans-serif;
       overflow-x: hidden;
-      scroll-behavior: smooth;
+      line-height: 1.6;
     }
 
-    /* خلفية الجسيمات الشبكية المتحركة */
+    /* خلفية الشبكة المتحركة */
     #particle-canvas {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       z-index: -1;
     }
 
+    /* الهيدر - متجاوب */
     header {
-      height: 70vh;
+      min-height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 20px;
-      position: relative;
-    }
-
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 150px;
-      background: linear-gradient(to top, var(--bg-dark), transparent);
+      padding: 40px 20px;
+      background: radial-gradient(circle at center, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
     }
 
     header h1 {
-      font-size: clamp(3rem, 10vw, 5.5rem);
-      font-weight: 700;
+      font-size: clamp(2.5rem, 8vw, 5rem);
       color: var(--primary);
-      text-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
-      animation: titleFadeIn 1.5s ease-out;
-      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+      margin-bottom: 20px;
     }
 
     header p {
-      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
-      color: var(--text-main);
-      max-width: 850px;
-      line-height: 1.5;
-      animation: subtitleFadeIn 1.8s ease-out;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      max-width: 800px;
+      margin-bottom: 30px;
     }
 
+    /* إصلاح زر الواتساب الرئيسي */
     .cta-button {
-      background: linear-gradient(45deg, var(--accent-ws), #1ebe5b);
-      color: white;
-      font-size: 1.3rem;
-      font-weight: 600;
-      padding: 16px 45px;
+      background: #25D366;
+      color: #fff !important;
+      padding: 15px 35px;
       border-radius: 50px;
-      text-decoration: none !important; /* تأكيد إزالة التسطير */
-      margin-top: 40px;
-      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
-      transition: all 0.4s ease;
-      animation: ctaPulse 2s infinite, ctaFadeIn 2.1s ease-out;
+      font-size: 1.2rem;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+      transition: 0.3s;
+      opacity: 1; /* وضوح كامل */
+      z-index: 10;
+      cursor: pointer;
     }
 
     .cta-button:hover {
-      transform: scale(1.08) translateY(-5px);
-      box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+      transform: scale(1.05);
+      background: #1ebe5b;
+      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 60px 20px;
-      position: relative;
-      z-index: 1;
+      padding: 40px 20px;
     }
 
-    h2 {
-      text-align: center;
-      font-size: 2.8rem;
-      color: var(--primary);
-      margin-bottom: 50px;
-      position: relative;
-    }
-
-    h2::after {
-      content: '';
-      display: block;
-      width: 100px;
-      height: 3px;
-      background: var(--primary);
-      margin: 12px auto 0;
-      border-radius: 2px;
-      box-shadow: 0 0 10px var(--primary);
-    }
-
-    /* شريط البحث */
-    .search-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 40px;
+    /* البحث */
+    .search-box {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 50px;
     }
 
     .search-input {
       width: 100%;
-      max-width: 500px;
       padding: 15px 25px;
-      font-size: 1.1rem;
-      font-family: 'Cairo', sans-serif;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
       border-radius: 30px;
-      color: var(--text-main);
-      outline: none;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      border: 1px solid var(--primary);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-family: 'Cairo';
+      font-size: 1rem;
+      backdrop-filter: blur(5px);
     }
 
-    .search-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 15px var(--primary-dim);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    /* شبكة المواد */
+    /* شبكة المواد - متجاوبة */
     .courses-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 30px;
-      margin-bottom: 90px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
     }
 
     .course-card {
       background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      padding: 35px;
-      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 20px;
       text-align: center;
-      transition: all 0.4s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      opacity: 0;
-      animation: cardSlideUp 0.6s ease-out forwards;
+      transition: 0.4s;
+      backdrop-filter: blur(10px);
     }
 
     .course-card:hover {
-      transform: translateY(-12px);
       border-color: var(--primary);
-      box-shadow: 0 15px 40px rgba(0, 229, 255, 0.15);
-      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-10px);
     }
 
     .course-card i.main-icon {
-      font-size: 3.5rem;
+      font-size: 3rem;
       color: var(--primary);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       display: block;
-      filter: drop-shadow(0 0 10px var(--primary-dim));
     }
 
-    .course-card h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: var(--text-main);
-    }
-
-    .course-card p {
-      font-size: 1rem;
-      color: var(--text-muted);
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
-
+    /* إصلاح محاذاة أيقونة اليوتيوب */
     .video-link {
-      display: flex;
+      margin-top: 20px;
+      display: inline-flex;
       align-items: center;
-      justify-content: center; /* توسيط المحتوى أفقيًا */
-      gap: 8px; /* مسافة ثابتة بين الأيقونة والنص */
-      width: 100%;
-      max-width: 200px;
-      margin: 0 auto; /* توسيط الرابط داخل البطاقة */
-      color: #ff0000; /* لون يوتيوب */
-      text-decoration: none !important;
-      font-weight: 600;
-      font-size: 1.05rem;
-      border: 2px solid #ff0000;
-      padding: 10px 20px;
-      border-radius: 25px;
-      transition: all 0.3s ease;
+      justify-content: center;
+      gap: 10px;
+      color: #ff0000 !important;
+      border: 1px solid #ff0000;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
     .video-link:hover {
       background: #ff0000;
-      color: #fff;
-      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+      color: white !important;
     }
 
-    .video-link i {
-      font-size: 1.2rem;
-    }
-
-    /* آراء الطلاب */
-    .testimonials {
+    /* صور الطلاب - متجاوبة */
+    .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .testimonial-item {
-      overflow: hidden;
-      border-radius: 18px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .testimonial-item:hover {
-      border-color: var(--primary);
-      transform: scale(1.05) rotate(1deg);
-      box-shadow: 0 10px 25px var(--primary-dim);
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 40px;
     }
 
     .testimonial-item img {
       width: 100%;
-      height: 280px;
+      height: 200px;
       object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-    
-    .testimonial-item:hover img {
-        transform: scale(1.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    footer {
-      background: rgba(0,0,0,0.7);
-      padding: 40px;
-      text-align: center;
-      margin-top: 60px;
-      border-top: 1px solid var(--card-border);
-      backdrop-filter: blur(10px);
-    }
-    
-    footer p {
-        color: var(--text-muted);
-        font-size: 1rem;
+    .testimonial-item img:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
     }
 
-    /* الأزرار العائمة المحدثة */
-    .floating-contact {
+    /* الأزرار العائمة */
+    .floating-container {
       position: fixed;
-      left: 25px;
-      bottom: 25px;
+      left: 20px;
+      bottom: 20px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      z-index: 1000;
+      gap: 15px;
+      z-index: 999;
     }
 
     .float-btn {
-      width: 65px;
-      height: 65px;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 32px;
-      color: white;
-      text-decoration: none !important; /* إزالة التسطير نهائياً */
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transition: all 0.4s ease;
-      opacity: 0.6; /* زيادة الشفافية */
-      position: relative;
-    }
-    
-    /* إزالة التسطير عند التمرير أيضاً */
-    .float-btn:hover, .float-btn:focus, .float-btn:active {
-        text-decoration: none !important;
-        outline: none;
+      color: white !important;
+      font-size: 24px;
+      opacity: 0.8; /* شفافية خفيفة */
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
-    .ws-btn { background-color: var(--accent-ws); animation: floatPulse 2.5s infinite 0.2s; }
-    .tg-btn { background-color: var(--accent-tg); animation: floatPulse 2.5s infinite; }
+    .float-btn:hover { opacity: 1; transform: scale(1.1); }
+    .btn-ws { background: #25D366; }
+    .btn-tg { background: #0088cc; }
 
-    .float-btn:hover {
-      opacity: 1; /* وضوح كامل عند التمرير */
-      transform: scale(1.15) translateY(-8px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    /* ميديا كويري للجوال */
+    @media (max-width: 600px) {
+      .courses-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      header h1 { font-size: 2.2rem; }
+      .floating-container { left: 10px; bottom: 10px; }
+      .float-btn { width: 50px; height: 50px; font-size: 20px; }
     }
 
-    /* نظام عرض الصور (Modal) */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 2000;
+      top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 10000;
       justify-content: center;
       align-items: center;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      backdrop-filter: blur(15px);
     }
-    
-    .modal.show {
-        display: flex;
-        opacity: 1;
-    }
+    .modal img { max-width: 90%; max-height: 80%; border-radius: 10px; }
+    .close-modal { position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer; }
 
-    .modal-content img {
-      max-width: 90vw;
-      max-height: 85vh;
-      border-radius: 15px;
-      box-shadow: 0 0 50px rgba(0,229,255,0.4);
-      transform: scale(0.8);
-      transition: transform 0.4s ease;
-    }
-    
-    .modal.show .modal-content img {
-        transform: scale(1);
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 30px; right: 30px;
-      font-size: 45px; color: white; cursor: pointer;
-      transition: 0.3s;
-      opacity: 0.7;
-    }
-    
-    .close-modal:hover {
-        opacity: 1;
-        transform: rotate(90deg);
-    }
-
-    /* Animations Keyframes */
-    @keyframes titleFadeIn { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes subtitleFadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes ctaFadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-    @keyframes cardSlideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-    
-    @keyframes ctaPulse {
-      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
-      70% { box-shadow: 0 0 0 25px rgba(37, 211, 102, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-    }
-    
-    @keyframes floatPulse {
-      0% { box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-      50% { box-shadow: 0 15px 35px rgba(0, 229, 255, 0.3); transform: translateY(-5px); }
-      100% { box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-    }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-        header { height: 60vh; }
-        h2 { font-size: 2.2rem; }
-        .course-card { padding: 25px; }
-    }
   </style>
 </head>
 <body>
@@ -400,231 +241,136 @@
 
 <header>
   <h1>د. نادر هاني</h1>
-  <p>منصتك الرائدة لتفوق نوعي في علوم الحاسب والبرمجة. نُبسط المعرفة، لنبني المستقبل.</p>
-  <a class="cta-button" href="https://wa.me/966553198965?text=مرحباً%20دكتور،%20أريد%20الإشتراك%20معك" target="_blank">
-    ابدأ رحلة النجاح <i class="fab fa-whatsapp"></i>
+  <p>خبير تبسيط علوم الحاسب والبرمجيات للطلاب الجامعيين</p>
+  <a href="https://wa.me/966553198965" target="_blank" class="cta-button">
+    <i class="fab fa-whatsapp"></i> تواصل معي الآن
   </a>
 </header>
 
 <div class="container">
-  <section id="courses">
-    <h2>المواد الدراسية</h2>
-    
-    <div class="search-container">
-      <input type="text" id="courseSearch" class="search-input" placeholder="ابحث عن مادة (مثلاً: جافا، C++)...">
+  
+  <div class="search-box">
+    <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن المادة التي تريدها...">
+  </div>
+
+  <div class="courses-grid" id="courseContainer">
+    <div class="course-card">
+      <i class="fas fa-code main-icon"></i>
+      <h3>برمجة C++</h3>
+      <p>دورة شاملة لأساسيات لغة السي بلس بلس.</p>
+      <a href="https://youtu.be/NmkthAFW4U0" target="_blank" class="video-link">
+        <i class="fab fa-youtube"></i> حصة تجريبية
+      </a>
     </div>
-    
-    <div class="courses-grid" id="coursesGrid">
-      
-      <div class="course-card" style="animation-delay: 0.1s;">
-        <div>
-            <i class="fas fa-code main-icon"></i>
-            <h3>البرمجة بلغة C++</h3>
-            <p>تأسيس عميق وفهم شامل للبرمجة الهيكلية والكائنية.</p>
-        </div>
-        <a href="https://youtu.be/NmkthAFW4U0" target="_blank" class="video-link">
-          <i class="fab fa-youtube"></i> حـصة تجريبية
-        </a>
-      </div>
 
-      <div class="course-card" style="animation-delay: 0.2s;">
-        <div>
-            <i class="fab fa-java main-icon"></i>
-            <h3>برمجة الجافا CSC 1103</h3>
-            <p>شرح أكاديمي مبسط لمنهج الجافا مع حلول عملية.</p>
-        </div>
-        <a href="https://youtu.be/si8SKzG5-Fg" target="_blank" class="video-link">
-          <i class="fab fa-youtube"></i> حـصة تجريبية
-        </a>
-      </div>
-
-      <div class="course-card" style="animation-delay: 0.3s;">
-        <div>
-            <i class="fab fa-python main-icon"></i>
-            <h3>برمجة البايثون CSC 1103</h3>
-            <p>تعلم لغة العصر من الصفر وحتى الاحتراف بتطبيقات واقعية.</p>
-        </div>
-        <a href="https://youtu.be/l14aJmR6P64" target="_blank" class="video-link">
-          <i class="fab fa-youtube"></i> حـصة تجريبية
-        </a>
-      </div>
-
-      <div class="course-card" style="animation-delay: 0.4s;">
-        <div>
-            <i class="fas fa-chart-pie main-icon"></i>
-            <h3>حزم إحصائية STAT 1102</h3>
-            <p>تحليل البيانات والأساليب الإحصائية باستخدام الحاسب.</p>
-        </div>
-        <a href="https://youtu.be/ycOpGKs2khM" target="_blank" class="video-link">
-          <i class="fab fa-youtube"></i> حـصة تجريبية
-        </a>
-      </div>
-
-      <div class="course-card" style="animation-delay: 0.5s;">
-        <div>
-            <i class="fas fa-brain main-icon"></i>
-            <h3>حل مشكلات بالحوسبة CSC 1102</h3>
-            <p>تنمية التفكير المنطقي وبناء الخوارزميات الذكية.</p>
-        </div>
-        <a href="https://youtu.be/FNJEemjxF2I" target="_blank" class="video-link">
-          <i class="fab fa-youtube"></i> حـصة تجريبية
-        </a>
-      </div>
-
+    <div class="course-card">
+      <i class="fab fa-java main-icon"></i>
+      <h3>برمجة الجافا</h3>
+      <p>شرح CSC 1103 بأسلوب أكاديمي ممتع.</p>
+      <a href="https://youtu.be/si8SKzG5-Fg" target="_blank" class="video-link">
+        <i class="fab fa-youtube"></i> حصة تجريبية
+      </a>
     </div>
-  </section>
 
-  <section id="opinions">
-    <h2>آراء وتجارب الطلاب</h2>
-    <div class="testimonials">
-      <div class="testimonial-item"><img src="images/1.jpg" alt="نتيجة طالب"></div>
-      <div class="testimonial-item"><img src="images/3.jpg" alt="رأي طالب"></div>
-      <div class="testimonial-item"><img src="images/4.jpg" alt="نتيجة طالب"></div>
-      <div class="testimonial-item"><img src="images/5.jpg" alt="رأي طالب"></div>
-      <div class="testimonial-item"><img src="images/6.jpg" alt="شكر من طالب"></div>
-      <div class="testimonial-item"><img src="images/7.jpg" alt="رأي طالب"></div>
-      <div class="testimonial-item"><img src="images/8.jpg" alt="نتيجة طالب"></div>
-      <div class="testimonial-item"><img src="images/9.jpg" alt="رأي طالب"></div>
+    <div class="course-card">
+      <i class="fab fa-python main-icon"></i>
+      <h3>برمجة بايثون</h3>
+      <p>إتقان لغة البايثون وحل المشكلات البرمجية.</p>
+      <a href="https://youtu.be/l14aJmR6P64" target="_blank" class="video-link">
+        <i class="fab fa-youtube"></i> حصة تجريبية
+      </a>
     </div>
-  </section>
+
+    <div class="course-card">
+      <i class="fas fa-chart-line main-icon"></i>
+      <h3>حزم إحصائية</h3>
+      <p>تبسيط مادة STAT 1102 بالكامل.</p>
+      <a href="https://youtu.be/ycOpGKs2khM" target="_blank" class="video-link">
+        <i class="fab fa-youtube"></i> حصة تجريبية
+      </a>
+    </div>
+  </div>
+
+  <h2 style="text-align: center; margin-top: 60px; color: var(--primary);">نتائج الطلاب</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-item"><img src="images/1.jpg"></div>
+    <div class="testimonial-item"><img src="images/3.jpg"></div>
+    <div class="testimonial-item"><img src="images/4.jpg"></div>
+    <div class="testimonial-item"><img src="images/5.jpg"></div>
+    <div class="testimonial-item"><img src="images/6.jpg"></div>
+    <div class="testimonial-item"><img src="images/7.jpg"></div>
+    <div class="testimonial-item"><img src="images/8.jpg"></div>
+    <div class="testimonial-item"><img src="images/9.jpg"></div>
+  </div>
+
 </div>
 
-<footer>
-  <p>جميع الحقوق محفوظة © 2024 - د. نادر هاني</p>
-</footer>
-
-<div class="floating-contact">
-  <a href="https://wa.me/966553198965" target="_blank" class="float-btn ws-btn" title="تواصل عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-  <a href="https://t.me/prof_Nader" target="_blank" class="float-btn tg-btn" title="تواصل عبر تلجرام">
-    <i class="fab fa-telegram-plane"></i>
-  </a>
+<div class="floating-container">
+  <a href="https://wa.me/966553198965" target="_blank" class="float-btn btn-ws"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://t.me/prof_Nader" target="_blank" class="float-btn btn-tg"><i class="fab fa-telegram-plane"></i></a>
 </div>
 
 <div id="imageModal" class="modal">
   <span class="close-modal">&times;</span>
-  <div class="modal-content">
-    <img id="modalImg" src="">
-  </div>
+  <img id="modalImg">
 </div>
 
 <script>
-  // --- خلفية الجسيمات الشبكية المتقدمة ---
-  const canvas = document.getElementById('particle-canvas');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  const particleCount = 100;
-  const connectionDistance = 120;
-  let mouse = { x: null, y: null };
-
-  window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
-  window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initParticles();
-  }
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
-    }
-    update() {
-      this.x += this.vx; this.y += this.vy;
-      if (this.x > canvas.width || this.x < 0) this.vx *= -1;
-      if (this.y > canvas.height || this.y < 0) this.vy *= -1;
-      
-      // تفاعل الماوس
-      if(mouse.x != null) {
-          let dx = mouse.x - this.x;
-          let dy = mouse.y - this.y;
-          let dist = Math.sqrt(dx*dx + dy*dy);
-          if(dist < 150) {
-              this.x -= dx * 0.01;
-              this.y -= dy * 0.01;
-          }
-      }
-    }
-    draw() {
-      ctx.fillStyle = 'rgba(0, 229, 255, 0.7)'; // لون الجسيمات
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-    }
-  }
-
-  function initParticles() { particles = []; for (let i = 0; i < particleCount; i++) particles.push(new Particle()); }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update(); particles[i].draw();
-      for (let j = i; j < particles.length; j++) {
-        let dx = particles[i].x - particles[j].x;
-        let dy = particles[i].y - particles[j].y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < connectionDistance) {
-          ctx.strokeStyle = `rgba(0, 229, 255, ${1 - dist / connectionDistance - 0.2})`; // لون الخطوط
-          ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', resize); resize(); animate();
-
-
-  // --- خاصية البحث عن المواد ---
-  const searchInput = document.getElementById('courseSearch');
-  const cards = document.querySelectorAll('.course-card');
-
-  searchInput.addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase().trim();
-
+  // نظام البحث
+  document.getElementById('searchInput').addEventListener('keyup', function() {
+    let filter = this.value.toLowerCase();
+    let cards = document.querySelectorAll('.course-card');
     cards.forEach(card => {
-      const title = card.querySelector('h3').textContent.toLowerCase();
-      const desc = card.querySelector('p').textContent.toLowerCase();
-
-      if (title.includes(searchTerm) || desc.includes(searchTerm)) {
-        card.style.display = 'flex'; // إظهار البطاقة
-        card.style.animation = 'none'; // إيقاف الانيميشن القديم
-        setTimeout(() => card.style.animation = 'cardSlideUp 0.4s ease-out forwards', 10); // انيميشن دخول خفيف
-      } else {
-        card.style.display = 'none'; // إخفاء البطاقة
-      }
+      let title = card.querySelector('h3').innerText.toLowerCase();
+      card.style.display = title.includes(filter) ? "block" : "none";
     });
   });
 
+  // كود الخلفية المتحركة
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
 
-  // --- نظام عرض الصور (Modal) المحسن ---
-  const modal = document.getElementById('imageModal');
-  const modalImg = document.getElementById('modalImg');
-  const closeBtn = document.querySelector('.close-modal');
-
-  document.querySelectorAll('.testimonial-item img').forEach(img => {
-    img.onclick = function() {
-      modal.classList.add('show'); // إضافة كلاس الإظهار
-      modalImg.src = this.src;
-      document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+  function init() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    particles = [];
+    for(let i=0; i<80; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: Math.random() * 0.5 - 0.25,
+        vy: Math.random() * 0.5 - 0.25
+      });
     }
-  });
-
-  function closeModal() {
-      modal.classList.remove('show'); // إزالة كلاس الإظهار
-      document.body.style.overflow = ''; // إعادة التمرير
   }
 
-  closeBtn.onclick = closeModal;
-  window.onclick = (e) => { if (e.target == modal) closeModal(); }
-  
-  // إغلاق بـ Esc
-  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+  function draw() {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0, 229, 255, 0.5)";
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', init);
+  init(); draw();
+
+  // المودال
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImg');
+  document.querySelectorAll('.testimonial-item img').forEach(img => {
+    img.onclick = () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+    }
+  });
+  document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
 </script>
 
 </body>
